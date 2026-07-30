@@ -56,7 +56,7 @@ The period photograph at Sandown is of this car, © Luigi Pacelli, used with per
 - `index.html` — every word of content, as real markup
 - `site.css` — design tokens and component styles
 - `site.js` — progressive enhancement only
-- `assets/` — photographs in WebP with JPEG fallback, at 640 / 1024 / 1600 / 2400 wide
+- `assets/` — photographs in WebP at 640 / 1024 / 1600 / 2400 wide, each with one JPEG fallback
 - `vercel.json`, `sitemap.xml`, `robots.txt` — hosting, caching, headers and indexing
 - `ARCHITECTURE.md`, `UX-SPEC.md` — design decisions and the scroll choreography
 - `_source/` — the original full-size photographs, not deployed
@@ -156,29 +156,43 @@ Paste it in with the rest and change the words.
 
 ---
 
-## Adding the photographs that are still missing
+## Replacing the four stand-in photographs
 
-Four frames are marked **Shot required** in the gallery: engine bay, rear three-quarter, underside, and documents. They show as dashed empty boxes on purpose, so a buyer can see the shoot isn't finished rather than wondering what is being hidden.
+Four gallery frames use stand-in images rather than photographs of this car: **engine bay**, **rear three-quarter**, **underside**, and **documents**. A photographer is booked to shoot the real ones.
 
-When you have a photograph:
+When you have a real photograph:
 
-1. Put the file in the **assets** folder.
-2. Open **index.html** and find the dashed box you are replacing, for example:
-
-```html
-<figure class="slide" data-pending><div class="slide-box pending"><div class="pending-in"><span class="kicker" style="color:var(--text-tertiary)">Shot required</span><span class="t">Engine bay</span></div></div></figure>
-```
-
-3. Replace that whole line with:
+1. Put the file in the **assets** folder. Name it after the frame it replaces, for example `engine-bay.jpg`.
+2. Open **index.html** and find that frame. Search for the word `engine-bay`. It looks like this:
 
 ```html
-<figure class="slide"><div class="slide-box"><img src="assets/YOUR-FILE.jpg" alt="Describe what is in the photograph." loading="lazy"></div><figcaption class="caption">A short line about the shot.</figcaption></figure>
+<figure class="slide"><div class="slide-box"><picture>…</picture></div><figcaption class="caption">The 1,996 cc twin-turbo V6, red cam covers, both turbochargers in view.</figcaption></figure>
 ```
 
-4. Change `YOUR-FILE.jpg` to your file's name, and write a real description in the `alt` and the caption.
-5. Find `1 of 10` further down and change the 10 to the new number of photographs.
+3. Replace the whole `<picture>…</picture>` with a plain image tag pointing at your file:
 
-That will work immediately. If you want the new photograph to load as fast as the others, ask a developer to run it through the same resizing step as the rest — see "For a developer" below.
+```html
+<img src="assets/engine-bay.jpg" alt="Describe what is in the photograph." loading="lazy">
+```
+
+4. Write a real description in the `alt`, and adjust the caption underneath if it no longer matches.
+5. Repeat for the other three.
+
+That works immediately. To make the new photographs load as fast as the rest, ask a developer to run them through the resizing step described under **For a developer**.
+
+### When all four are real
+
+Two things to switch back on, both one line:
+
+1. In **index.html**, near the top, delete this line:
+
+```html
+<meta name="robots" content="noindex, nofollow">
+```
+
+2. In **robots.txt**, change `Disallow: /` back to `Allow: /`.
+
+Until then the page stays out of Google, which is deliberate: a search result is the one way somebody could arrive here without being handed the link.
 
 ---
 
@@ -209,9 +223,9 @@ sitemap.xml   robots.txt
 _source/      the original full-size photographs, not deployed
 ```
 
-Photographs are served as WebP with JPEG fallback through `<picture>`, at 640 / 1024 / 1600 / 2400 wide, chosen by `srcset`. Nothing is ever upscaled past its master: `front-on-workshop` stops at 555px and `sandown-period-race` at 576px because those are web scans, and `assets/manifest.json` records every master's true size.
+Photographs are served through `<picture>`: a WebP `srcset` at 640 / 1024 / 1600 / 2400 wide on the `<source>`, and a single JPEG at 1024 on the `<img>` as the fallback. Only about 3% of browsers need the JPEG and none of them are choosing between widths, so writing one per image rather than one per width halved the payload. Nothing is ever upscaled past its master: `front-on-workshop` stops at 555px and `sandown-period-race` at 576px because those are web scans, and `assets/manifest.json` records every master's true size.
 
-To regenerate the assets after adding a photograph to `_source/`, adapt the Pillow script that produced them — resize to each width under the master, save `.webp` at quality 80 and `.jpg` at 78 progressive, and refresh `manifest.json`.
+To regenerate the assets after adding a photograph to `_source/`, adapt the Pillow script that produced them — resize to each width under the master, save `.webp` at quality 74 method 5, and one `.jpg` at quality 76 progressive, and refresh `manifest.json`.
 
 Design decisions, the scroll choreography and the reasoning behind them are in **ARCHITECTURE.md** and **UX-SPEC.md**.
 

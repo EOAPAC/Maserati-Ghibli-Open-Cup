@@ -124,10 +124,17 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible{
 @media (prefers-reduced-motion:reduce){.track{scroll-behavior:auto}}
 .slide{margin:0;flex:0 0 auto;scroll-snap-align:center;width:min(86vw,900px);display:grid;gap:var(--space-3)}
 /* Web-scan sources. Never rendered above native width. */
-.slide[data-lowres]{width:min(86vw,555px)}
-.slide-box{position:relative;aspect-ratio:16/9;background:var(--asphalt-sunken);border-radius:var(--radius-figure);border:1px solid var(--border-subtle);overflow:hidden;display:grid;place-items:center}
-.slide-box.portrait{aspect-ratio:3/4}
-.slide-box img{width:100%;height:100%;object-fit:cover}
+/* every slide is the same width and the same frame; see .slide-box */
+/* One frame for every photograph. 4:3 holds the ten landscape shots
+   (1.35-1.82) close to full width and still gives the four portraits
+   half the frame. Images are contained, never cropped: cropping a 2:3
+   portrait into a landscape frame would cut through the trident roundel
+   and the Brembo caliper, which the art direction forbids. max-width and
+   max-height rather than width/height so the two low-resolution scans
+   sit at their true size instead of being blown up. */
+.slide-box{position:relative;aspect-ratio:4/3;background:var(--asphalt-sunken);border-radius:var(--radius-figure);border:1px solid var(--border-subtle);overflow:hidden;display:grid;place-items:center}
+.slide-box picture{display:contents}
+.slide-box img{max-width:100%;max-height:100%;width:auto;height:auto;object-fit:contain}
 .slide-box.pending{border:1px dashed var(--fill-faint)}
 .pending-in{display:grid;gap:var(--space-2);justify-items:center;padding:var(--space-6);text-align:center}
 .pending-in .t{font-family:var(--font-display);font-size:1.25rem;color:var(--text-secondary)}
@@ -154,7 +161,7 @@ footer{border-top:1px solid var(--border-subtle);padding:var(--space-7) var(--gu
 /* ── Responsive images. Every <img> is wrapped in <picture> for WebP with
    width variants, so the wrapper has to fill the box the img used to fill,
    and the one direct-child selector has to reach through it. ── */
-.hero-media picture,.chapter-fig picture,.hot-media picture,.slide-box picture{display:block;width:100%;height:100%}
+.hero-media picture,.chapter-fig picture,.hot-media picture{display:block;width:100%;height:100%}
 .fig picture{display:block}
 .enquire>picture{position:absolute;inset:0;display:block;width:100%;height:100%}
 .enquire>picture>img{width:100%;height:100%;object-fit:cover;object-position:center 60%}
