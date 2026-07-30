@@ -8,7 +8,7 @@
  *
  *   RESEND_API_KEY        set by the integration   the sending key
  *   RESEND_EMAIL_DOMAIN   set by the integration   a domain Resend has verified
- *   ENQUIRY_TO            optional                 default jeremy@badenbower.com
+ *   ENQUIRY_TO            optional                 default unrecommend@gmail.com
  *   ENQUIRY_FROM          optional                 overrides the From address
  *
  * The From address has to sit on a domain Resend has verified, or the send is
@@ -25,7 +25,7 @@
  * runtime provides. The site keeps its "no build step" property.
  */
 
-const TO_DEFAULT = "jeremy@badenbower.com";
+const TO_DEFAULT = "unrecommend@gmail.com";
 /* The integration provisions a verified domain; use it unless told otherwise. */
 function fromAddress() {
   if (process.env.ENQUIRY_FROM) return process.env.ENQUIRY_FROM;

@@ -69,9 +69,13 @@ Four gallery frames — engine bay, rear three-quarter, underside and documents 
 
 The car is in Sydney, Australia. Inspections are by appointment and the documents come out with the car.
 
-jeremy@badenbower.com# The Ghibli Open Cup website
+Enquiries reach **unrecommend@gmail.com**.
 
-This folder is the whole website. There is no app to install and nothing to build. It is three files and a folder of photographs, and any web host can serve it as-is.
+---
+
+## Working on the site
+
+The whole website is this folder. There is no app to install and nothing to build. It is three files and a folder of photographs, and any web host can serve it as-is.
 
 ---
 
@@ -126,7 +130,7 @@ Two optional variables, if you want to override the defaults:
 
 | Name | Default |
 | --- | --- |
-| `ENQUIRY_TO` | `jeremy@badenbower.com` |
+| `ENQUIRY_TO` | `unrecommend@gmail.com` |
 | `ENQUIRY_FROM` | `enquiries@` plus the domain the integration provisioned |
 
 ### The one thing likely to trip up your first test
@@ -161,7 +165,7 @@ reply-to, so hitting reply in your mail client answers the buyer, not Resend.
 ### What happens when something goes wrong
 
 - **Key missing or wrong:** the visitor sees "That did not send. Try again, or
-  email jeremy@badenbower.com directly." Nothing they typed is lost. The real
+  email unrecommend@gmail.com directly." Nothing they typed is lost. The real
   reason is in the Vercel function logs.
 - **Resend rejects the send:** same message to the visitor, detail in the logs.
 - **A bot fills the form:** there is a hidden field called `company` that people

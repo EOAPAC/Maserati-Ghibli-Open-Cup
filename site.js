@@ -211,7 +211,7 @@
      failure message, which is the one moment a visitor needs another way
      through. */
   var ENDPOINT = "/api/enquiry";
-  var EMAIL = "jeremy@badenbower.com";
+  var EMAIL = "unrecommend@gmail.com";
 
   var form = document.getElementById("enq-form");
   if (form) {
