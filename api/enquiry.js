@@ -52,8 +52,26 @@ const escapeHtml = (s) =>
   );
 
 export default async function handler(req, res) {
+  /* GET reports which configuration is present, so a misrouted enquiry can be
+     diagnosed without redeploying to add logging. Booleans only: no addresses,
+     no key material, nothing an attacker gains from. */
+  if (req.method === "GET") {
+    return res.status(200).json({
+      ok: true,
+      config: {
+        RESEND_API_KEY: Boolean(process.env.RESEND_API_KEY),
+        RESEND_EMAIL_DOMAIN: Boolean(process.env.RESEND_EMAIL_DOMAIN),
+        ENQUIRY_TO: Boolean(process.env.ENQUIRY_TO),
+        ENQUIRY_FROM: Boolean(process.env.ENQUIRY_FROM),
+      },
+      recipient: process.env.ENQUIRY_TO
+        ? "ENQUIRY_TO"
+        : "code fallback — ENQUIRY_TO is not set on this deployment",
+    });
+  }
+
   if (req.method !== "POST") {
-    res.setHeader("Allow", "POST");
+    res.setHeader("Allow", "GET, POST");
     return res.status(405).json({ error: "Method not allowed" });
   }
 
