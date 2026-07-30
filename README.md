@@ -1,4 +1,75 @@
-# The Ghibli Open Cup website
+# maseratighibliopencup.com
+
+The website for the sale of a 1995 Maserati Ghibli Open Cup Evoluzione — build number 21 of 24, in original race condition, 590 kilometres from new, in Sydney, Australia.
+
+The site is a single page. Everything a visitor reads is real markup in `index.html`; the scroll work is added on top of it.
+
+---
+
+## The car
+
+Maserati's factory-built racing Ghibli, later upgraded by the factory to Evoluzione specification. One owner for twenty-four years, who bought it from the Maserati dealership where he had worked for eighteen. It has raced in Italy and at Sandown Raceway in Australia, as number 3A for Quemby and Costanzo, and has not been converted, softened or made road-friendly.
+
+| | |
+| --- | --- |
+| Model | Maserati Ghibli Open Cup Evoluzione |
+| Year | 1995 |
+| Build number | 21 of 24 (per the owner) |
+| Odometer | 590 km |
+| Ownership | One owner, 24 years |
+| Race history | Italy; Sandown Raceway, Australia |
+| Condition | Original race condition |
+| Location | Sydney, Australia |
+| Price | On enquiry |
+
+## The series
+
+Maserati built a competition version of its twin-turbo coupé for 1995 and wrapped a pan-European one-make championship around it: eight rounds at good European circuits, in company with the DTM, run out of Modena by Historica Selecta under Adolfo Orsi, for gentleman drivers who paid for the privilege.
+
+Engines were prepared by Maserati with Alfa Corse. One rule kept the field honest — the engine, turbochargers, gearbox and differential were sealed at the factory before delivery, with nothing permitted beyond ordinary maintenance. No development war, and not one engine rebuild across the season. The championship was cancelled two races into 1996 for financial reasons rather than sporting ones, and the factory then offered the Evoluzione upgrade to the cars that kept racing.
+
+Period accounts put production at about 24 to 25 cars, and no source puts it above thirty. The owner of this car states that 24 Evoluzione bodies were built, that ten were completed as race cars, that four of those have since been written off, and that six remain.
+
+## Specification
+
+| | |
+| --- | --- |
+| Engine | 1,996 cc twin-turbocharged 24-valve V6 |
+| Power, as built | 330 bhp (165 bhp per litre) |
+| Power, this car | 400 hp after the factory Evoluzione upgrades (per the owner) |
+| Evoluzione upgrades | Modified ECUs, high-flow injectors, racing camshaft, head work, factory extractors |
+| Preparation | Maserati with Alfa Corse — uprated intercoolers, modified engine management, straight-through exhaust |
+| Gearbox | Getrag six-speed manual |
+| Drive | Rear wheels, limited-slip differential |
+| Brakes | Ventilated discs, Brembo calipers; drilled and grooved discs on the car offered |
+| Wheels | Five-spoke Speedline, trident centre caps |
+| Body | Two-door coupé, Ghibli II |
+
+## Sourcing
+
+Facts about the series are attributed on the page to Bonhams (lot 215), Maserati Classic, Conceptcarz and Enrico's Maserati Pages. Facts particular to this car are attributed to the owner and marked as such. Chassis and engine numbers, the race record and the registration position are confirmed on enquiry, with the paperwork in front of you. Nothing on the page is estimated, and what the documents do not establish is not claimed. If you add a claim, add where it came from.
+
+The period photograph at Sandown is of this car, © Luigi Pacelli, used with permission. The credit stays with the image.
+
+## Repository
+
+- `index.html` — every word of content, as real markup
+- `site.css` — design tokens and component styles
+- `site.js` — progressive enhancement only
+- `assets/` — photographs in WebP with JPEG fallback, at 640 / 1024 / 1600 / 2400 wide
+- `vercel.json`, `sitemap.xml`, `robots.txt` — hosting, caching, headers and indexing
+- `ARCHITECTURE.md`, `UX-SPEC.md` — design decisions and the scroll choreography
+- `_source/` — the original full-size photographs, not deployed
+
+Plain HTML, one stylesheet, one script: no framework, no build step, no CDN beyond Google Fonts. Open `index.html` in a browser to view it locally. Deployment is on Vercel, republished about a minute after each push, with `maseratighibliopencup.com` as the canonical domain and `www` redirecting to it.
+
+Four gallery frames — engine bay, rear three-quarter, underside and documents — still use stand-in images. While they are in place the page carries a `noindex` tag and `robots.txt` disallows crawling; both come off when the real photographs land.
+
+## Enquiries
+
+The car is in Sydney, Australia. Inspections are by appointment and the documents come out with the car.
+
+jeremy@badenbower.com# The Ghibli Open Cup website
 
 This folder is the whole website. There is no app to install and nothing to build. It is three files and a folder of photographs, and any web host can serve it as-is.
 
@@ -144,20 +215,3 @@ To regenerate the assets after adding a photograph to `_source/`, adapt the Pill
 
 Design decisions, the scroll choreography and the reasoning behind them are in **ARCHITECTURE.md** and **UX-SPEC.md**.
 
----
-
-## The four stand-in photographs
-
-Four gallery frames — engine bay, rear three-quarter, underside, and documents — currently use stand-in images rather than photographs of this car. They are there so the page can be shown finished. A photographer is booked to shoot the real ones.
-
-While they are in place the page is kept out of Google, because a search result is the one way someone could arrive here without being told. Two things to undo when the real photographs land:
-
-1. In **index.html**, near the top, delete this line:
-
-```html
-<meta name="robots" content="noindex, nofollow">
-```
-
-2. In **robots.txt**, change `Disallow: /` back to `Allow: /`.
-
-To swap a photograph in, put the new file in **assets** and change the `src` on the matching `<figure class="slide">` in index.html. The four to replace are named `engine-bay`, `rear-three-quarter`, `underside` and `documents`.
