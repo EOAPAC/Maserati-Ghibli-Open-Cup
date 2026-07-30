@@ -1,4 +1,7 @@
+# Closed to crawlers while four gallery frames carry placeholder images.
+# When the real photographs replace them, restore the two lines below to
+# "User-agent: *" / "Allow: /" and delete the noindex meta in index.html.
 User-agent: *
-Allow: /
+Disallow: /
 
 Sitemap: https://maseratighibliopencup.com/sitemap.xml
