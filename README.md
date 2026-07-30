@@ -143,3 +143,21 @@ Photographs are served as WebP with JPEG fallback through `<picture>`, at 640 / 
 To regenerate the assets after adding a photograph to `_source/`, adapt the Pillow script that produced them — resize to each width under the master, save `.webp` at quality 80 and `.jpg` at 78 progressive, and refresh `manifest.json`.
 
 Design decisions, the scroll choreography and the reasoning behind them are in **ARCHITECTURE.md** and **UX-SPEC.md**.
+
+---
+
+## The four stand-in photographs
+
+Four gallery frames — engine bay, rear three-quarter, underside, and documents — currently use stand-in images rather than photographs of this car. They are there so the page can be shown finished. A photographer is booked to shoot the real ones.
+
+While they are in place the page is kept out of Google, because a search result is the one way someone could arrive here without being told. Two things to undo when the real photographs land:
+
+1. In **index.html**, near the top, delete this line:
+
+```html
+<meta name="robots" content="noindex, nofollow">
+```
+
+2. In **robots.txt**, change `Disallow: /` back to `Allow: /`.
+
+To swap a photograph in, put the new file in **assets** and change the `src` on the matching `<figure class="slide">` in index.html. The four to replace are named `engine-bay`, `rear-three-quarter`, `underside` and `documents`.
