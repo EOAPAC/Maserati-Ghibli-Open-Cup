@@ -8,7 +8,7 @@
  *
  *   RESEND_API_KEY        set by the integration   the sending key
  *   RESEND_EMAIL_DOMAIN   set by the integration   a domain Resend has verified
- *   ENQUIRY_TO            optional                 default unrecommend@gmail.com
+ *   ENQUIRY_TO            set this                 the real recipient; see the note below
  *   ENQUIRY_FROM          optional                 overrides the From address
  *
  * The From address has to sit on a domain Resend has verified, or the send is
@@ -25,6 +25,14 @@
  * runtime provides. The site keeps its "no build step" property.
  */
 
+/* Where enquiries land.
+ *
+ * Set ENQUIRY_TO in Vercel. That is the real recipient, and keeping it in an
+ * environment variable rather than here matters: this repository is public, so
+ * anything written in this file is world-readable and will be scraped.
+ *
+ * The fallback below exists only so the form never silently breaks if the
+ * variable is missing. It is not the intended destination. */
 const TO_DEFAULT = "unrecommend@gmail.com";
 /* The integration provisions a verified domain; use it unless told otherwise. */
 function fromAddress() {

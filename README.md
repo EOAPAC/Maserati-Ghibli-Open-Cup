@@ -69,7 +69,7 @@ Four gallery frames — engine bay, rear three-quarter, underside and documents 
 
 The car is in Sydney, Australia. Inspections are by appointment and the documents come out with the car.
 
-Enquiries reach **unrecommend@gmail.com**.
+Enquiries reach whichever address `ENQUIRY_TO` is set to in Vercel. It is kept out of this repository on purpose, since the repository is public.
 
 ---
 
@@ -128,10 +128,10 @@ What is left to do:
 
 Two optional variables, if you want to override the defaults:
 
-| Name | Default |
+| Name | What it does |
 | --- | --- |
-| `ENQUIRY_TO` | `unrecommend@gmail.com` |
-| `ENQUIRY_FROM` | `enquiries@` plus the domain the integration provisioned |
+| `ENQUIRY_TO` | **Where enquiries land.** Set this. It is deliberately not written into the code, because this repository is public and anything in it is world-readable and gets scraped. |
+| `ENQUIRY_FROM` | The address enquiries are sent from. Defaults to `enquiries@` plus the domain the Resend integration provisioned. |
 
 ### The one thing likely to trip up your first test
 
