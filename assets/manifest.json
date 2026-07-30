@@ -1,131 +1,143 @@
 {
+ "window-net": {
+  "widths": [
+   640,
+   1024,
+   1600,
+   2400
+  ],
+  "w": 2400,
+  "h": 1600,
+  "fallback": 1024
+ },
+ "decals-bonnet-pin": {
+  "widths": [
+   640,
+   1024,
+   1600,
+   2400
+  ],
+  "w": 2400,
+  "h": 3600,
+  "fallback": 1024
+ },
  "hero-two-cars-night": {
-  "w": 2298,
-  "h": 1402,
   "widths": [
    640,
    1024,
    1600
-  ]
- },
- "decals-bonnet-pin": {
-  "w": 3955,
-  "h": 5932,
-  "widths": [
-   640,
-   1024,
-   1600,
-   2400
-  ]
- },
- "flank-wheel-guard-portrait": {
-  "w": 2730,
-  "h": 4096,
-  "widths": [
-   640,
-   1024,
-   1600,
-   2400
-  ]
- },
- "wheel-brembo-crop": {
-  "w": 2730,
-  "h": 1820,
-  "widths": [
-   640,
-   1024,
-   1600,
-   2400
-  ]
- },
- "two-cars-wheels": {
-  "w": 2730,
-  "h": 4096,
-  "widths": [
-   640,
-   1024,
-   1600,
-   2400
-  ]
+  ],
+  "w": 1600,
+  "h": 976,
+  "fallback": 1024
  },
  "interior-dash": {
-  "w": 2730,
-  "h": 1820,
   "widths": [
    640,
    1024,
    1600,
    2400
-  ]
+  ],
+  "w": 2400,
+  "h": 1600,
+  "fallback": 1024
  },
- "interior-cage": {
-  "w": 2730,
-  "h": 4096,
+ "flank-wheel-guard-portrait": {
   "widths": [
    640,
    1024,
    1600,
    2400
-  ]
+  ],
+  "w": 2400,
+  "h": 3601,
+  "fallback": 1024
  },
- "window-net": {
-  "w": 2730,
-  "h": 1820,
+ "wheel-brembo-crop": {
   "widths": [
    640,
    1024,
    1600,
    2400
-  ]
+  ],
+  "w": 2400,
+  "h": 1600,
+  "fallback": 1024
  },
- "front-on-workshop": {
-  "w": 555,
-  "h": 411,
-  "widths": [
-   555
-  ]
- },
- "sandown-period-race": {
-  "w": 576,
-  "h": 317,
-  "widths": [
-   576
-  ]
- },
- "engine-bay": {
-  "w": 1264,
-  "h": 848,
+ "two-cars-wheels": {
   "widths": [
    640,
    1024,
-   1264
-  ]
+   1600,
+   2400
+  ],
+  "w": 2400,
+  "h": 3601,
+  "fallback": 1024
  },
  "rear-three-quarter": {
-  "w": 1264,
-  "h": 848,
   "widths": [
    640,
    1024,
    1264
-  ]
+  ],
+  "w": 1264,
+  "h": 848,
+  "fallback": 1024
+ },
+ "engine-bay": {
+  "widths": [
+   640,
+   1024,
+   1264
+  ],
+  "w": 1264,
+  "h": 848,
+  "fallback": 1024
+ },
+ "interior-cage": {
+  "widths": [
+   640,
+   1024,
+   1600,
+   2400
+  ],
+  "w": 2400,
+  "h": 3601,
+  "fallback": 1024
+ },
+ "front-on-workshop": {
+  "widths": [
+   555
+  ],
+  "w": 555,
+  "h": 411,
+  "fallback": 555
  },
  "underside": {
+  "widths": [
+   640,
+   1024,
+   1264
+  ],
   "w": 1264,
   "h": 848,
+  "fallback": 1024
+ },
+ "sandown-period-race": {
   "widths": [
-   640,
-   1024,
-   1264
-  ]
+   576
+  ],
+  "w": 576,
+  "h": 317,
+  "fallback": 576
  },
  "documents": {
-  "w": 1264,
-  "h": 433,
   "widths": [
-   640,
-   1024,
-   1264
-  ]
+   632
+  ],
+  "w": 632,
+  "h": 433,
+  "fallback": 632
  }
 }

@@ -85,29 +85,43 @@ Paste it in with the rest and change the words.
 
 ---
 
-## Adding the photographs that are still missing
+## Replacing the four stand-in photographs
 
-Four frames are marked **Shot required** in the gallery: engine bay, rear three-quarter, underside, and documents. They show as dashed empty boxes on purpose, so a buyer can see the shoot isn't finished rather than wondering what is being hidden.
+Four gallery frames use stand-in images rather than photographs of this car: **engine bay**, **rear three-quarter**, **underside**, and **documents**. A photographer is booked to shoot the real ones.
 
-When you have a photograph:
+When you have a real photograph:
 
-1. Put the file in the **assets** folder.
-2. Open **index.html** and find the dashed box you are replacing, for example:
-
-```html
-<figure class="slide" data-pending><div class="slide-box pending"><div class="pending-in"><span class="kicker" style="color:var(--text-tertiary)">Shot required</span><span class="t">Engine bay</span></div></div></figure>
-```
-
-3. Replace that whole line with:
+1. Put the file in the **assets** folder. Name it after the frame it replaces, for example `engine-bay.jpg`.
+2. Open **index.html** and find that frame. Search for the word `engine-bay`. It looks like this:
 
 ```html
-<figure class="slide"><div class="slide-box"><img src="assets/YOUR-FILE.jpg" alt="Describe what is in the photograph." loading="lazy"></div><figcaption class="caption">A short line about the shot.</figcaption></figure>
+<figure class="slide"><div class="slide-box"><picture>…</picture></div><figcaption class="caption">The 1,996 cc twin-turbo V6, red cam covers, both turbochargers in view.</figcaption></figure>
 ```
 
-4. Change `YOUR-FILE.jpg` to your file's name, and write a real description in the `alt` and the caption.
-5. Find `1 of 10` further down and change the 10 to the new number of photographs.
+3. Replace the whole `<picture>…</picture>` with a plain image tag pointing at your file:
 
-That will work immediately. If you want the new photograph to load as fast as the others, ask a developer to run it through the same resizing step as the rest — see "For a developer" below.
+```html
+<img src="assets/engine-bay.jpg" alt="Describe what is in the photograph." loading="lazy">
+```
+
+4. Write a real description in the `alt`, and adjust the caption underneath if it no longer matches.
+5. Repeat for the other three.
+
+That works immediately. To make the new photographs load as fast as the rest, ask a developer to run them through the resizing step described under **For a developer**.
+
+### When all four are real
+
+Two things to switch back on, both one line:
+
+1. In **index.html**, near the top, delete this line:
+
+```html
+<meta name="robots" content="noindex, nofollow">
+```
+
+2. In **robots.txt**, change `Disallow: /` back to `Allow: /`.
+
+Until then the page stays out of Google, which is deliberate: a search result is the one way somebody could arrive here without being handed the link.
 
 ---
 
@@ -145,19 +159,3 @@ To regenerate the assets after adding a photograph to `_source/`, adapt the Pill
 Design decisions, the scroll choreography and the reasoning behind them are in **ARCHITECTURE.md** and **UX-SPEC.md**.
 
 ---
-
-## The four stand-in photographs
-
-Four gallery frames — engine bay, rear three-quarter, underside, and documents — currently use stand-in images rather than photographs of this car. They are there so the page can be shown finished. A photographer is booked to shoot the real ones.
-
-While they are in place the page is kept out of Google, because a search result is the one way someone could arrive here without being told. Two things to undo when the real photographs land:
-
-1. In **index.html**, near the top, delete this line:
-
-```html
-<meta name="robots" content="noindex, nofollow">
-```
-
-2. In **robots.txt**, change `Disallow: /` back to `Allow: /`.
-
-To swap a photograph in, put the new file in **assets** and change the `src` on the matching `<figure class="slide">` in index.html. The four to replace are named `engine-bay`, `rear-three-quarter`, `underside` and `documents`.
