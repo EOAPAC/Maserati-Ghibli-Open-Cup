@@ -129,6 +129,17 @@ Two optional variables, if you want to override the defaults:
 | `ENQUIRY_TO` | `jeremy@badenbower.com` |
 | `ENQUIRY_FROM` | `enquiries@` plus the domain the integration provisioned |
 
+### The one thing likely to trip up your first test
+
+If the integration set only `RESEND_API_KEY` and not a sending domain, the
+function falls back to `onboarding@resend.dev`. Resend accepts that From
+address from anyone, but it will **only deliver to the email address on your
+Resend account**. Send a test to anything else and Resend refuses it.
+
+So for the very first test, make sure `ENQUIRY_TO` is the address your Resend
+account is registered under. Once your own domain is verified, that restriction
+goes away and enquiries can go anywhere.
+
 ### Sending as your own domain
 
 Out of the box the email arrives from the domain Resend provisioned through the
