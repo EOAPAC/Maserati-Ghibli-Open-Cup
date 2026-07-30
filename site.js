@@ -207,8 +207,9 @@
      browser: this site is static and public, so a key here would be readable
      by anyone viewing source. See api/enquiry.js and README.md.
 
-     EMAIL is the published fallback under the form, for people who would
-     rather write directly. */
+     EMAIL is no longer published under the form. It is still named in the
+     failure message, which is the one moment a visitor needs another way
+     through. */
   var ENDPOINT = "/api/enquiry";
   var EMAIL = "jeremy@badenbower.com";
 
@@ -219,14 +220,6 @@
 
     submit.disabled = false;
     if (wireNote) wireNote.remove();
-
-    if (EMAIL) {
-      var alt = document.createElement("p");
-      alt.className = "hint";
-      alt.style.marginTop = "var(--space-4)";
-      alt.innerHTML = 'Prefer email? Write to <a href="mailto:' + EMAIL + '">' + EMAIL + "</a>.";
-      form.appendChild(alt);
-    }
 
     var RULES = {
       name: function (v) { return v.trim() ? "" : "Add your name so we know who is asking."; },
