@@ -318,9 +318,10 @@
 <div class="field"><label for="phone">Phone (optional)</label><input id="phone" name="phone" type="tel" aria-describedby="phone-hint"><span class="hint" id="phone-hint">Include a country code if you are outside Australia.</span></div>
 </div>
 <div class="field" style="margin-bottom:var(--space-5)"><label for="message">Message <span class="req">*</span></label><textarea id="message" name="message" rows="4" required aria-describedby="message-hint"></textarea><span class="err" id="message-error"></span><span class="hint" id="message-hint">Tell us who you are and what you would like to know.</span></div>
+<div aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden"><label for="company">Company</label><input id="company" name="company" type="text" tabindex="-1" autocomplete="off"></div>
 <div style="display:flex;gap:var(--space-5);align-items:center;flex-wrap:wrap">
-<button class="btn btn-primary btn-lg" type="submit" id="submit" disabled>Send enquiry</button>
-<span class="hint" id="wire-note">Endpoint not yet configured.</span>
+<button class="btn btn-primary btn-lg" type="submit" id="submit">Send enquiry</button>
+
 </div>
 </form>
 <div style="display:grid;gap:var(--space-2);padding-top:var(--space-5);border-top:1px solid var(--border-subtle)">

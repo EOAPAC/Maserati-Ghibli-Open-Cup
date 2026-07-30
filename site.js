@@ -202,31 +202,30 @@
   }
 
   /* ── Enquiry form ──
-     Enquiries go to the address below. To switch to a form service (better:
-     mailto depends on the visitor having a mail client configured), set
-     ENDPOINT and leave EMAIL in place as the published fallback. */
-  var ENDPOINT = "";
+     Posts to /api/enquiry, a serverless function that sends through Resend.
+     The API key lives in a Vercel environment variable and never reaches the
+     browser: this site is static and public, so a key here would be readable
+     by anyone viewing source. See api/enquiry.js and README.md.
+
+     EMAIL is the published fallback under the form, for people who would
+     rather write directly. */
+  var ENDPOINT = "/api/enquiry";
   var EMAIL = "jeremy@badenbower.com";
 
   var form = document.getElementById("enq-form");
   if (form) {
     var submit = document.getElementById("submit");
     var wireNote = document.getElementById("wire-note");
-    var wired = !!(ENDPOINT || EMAIL);
 
-    if (wired) {
-      submit.disabled = false;
-      wireNote.remove();
-      form.setAttribute("action", ENDPOINT || "mailto:" + EMAIL);
-      form.setAttribute("method", "post");
-      if (EMAIL && !ENDPOINT) form.setAttribute("enctype", "text/plain");
+    submit.disabled = false;
+    if (wireNote) wireNote.remove();
+
+    if (EMAIL) {
       var alt = document.createElement("p");
       alt.className = "hint";
       alt.style.marginTop = "var(--space-4)";
-      if (EMAIL) {
-        alt.innerHTML = 'Prefer email? Write to <a href="mailto:' + EMAIL + '">' + EMAIL + "</a>.";
-        form.appendChild(alt);
-      }
+      alt.innerHTML = 'Prefer email? Write to <a href="mailto:' + EMAIL + '">' + EMAIL + "</a>.";
+      form.appendChild(alt);
     }
 
     var RULES = {
@@ -238,10 +237,10 @@
       message: function (v) { return v.trim() ? "" : "Add a line or two so we can answer properly."; }
     };
 
-    var showError = function (name) {
+    var showError = function (name, forced) {
       var el = document.getElementById(name);
       var out = document.getElementById(name + "-error");
-      var msg = RULES[name](el.value);
+      var msg = forced !== undefined ? forced : RULES[name](el.value);
       out.textContent = msg;
       if (msg) {
         el.setAttribute("aria-invalid", "true");
@@ -259,30 +258,93 @@
       if (el) el.addEventListener("blur", function () { showError(n); });
     });
 
+    var formError = function (text) {
+      var box = document.getElementById("form-error");
+      if (!box) {
+        box = document.createElement("p");
+        box.id = "form-error";
+        box.className = "err";
+        box.setAttribute("role", "alert");
+        box.style.marginBottom = "var(--space-4)";
+        submit.parentNode.insertBefore(box, submit);
+      }
+      box.textContent = text;
+    };
+
     form.addEventListener("submit", function (e) {
+      e.preventDefault();
+
       var ok = true, first = null;
       Object.keys(RULES).forEach(function (n) {
         if (!showError(n) && ok) { ok = false; first = n; }
       });
       if (!ok) {
-        e.preventDefault();
-        var el = document.getElementById(first);
-        if (el) el.focus();
+        var bad = document.getElementById(first);
+        if (bad) bad.focus();
         return;
       }
-      if (!ENDPOINT) {
-        e.preventDefault();
-        if (EMAIL) {
-          form.submit();
-          var done = document.createElement("p");
+
+      var existing = document.getElementById("form-error");
+      if (existing) existing.remove();
+
+      var label = submit.textContent;
+      submit.disabled = true;
+      submit.setAttribute("aria-busy", "true");
+      submit.textContent = "Sending";
+
+      var payload = {
+        name: document.getElementById("name").value,
+        email: document.getElementById("email").value,
+        phone: (document.getElementById("phone") || {}).value || "",
+        message: document.getElementById("message").value,
+        company: (document.getElementById("company") || {}).value || ""
+      };
+
+      fetch(ENDPOINT, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload)
+      }).then(function (r) {
+        return r.json().catch(function () { return {}; }).then(function (data) {
+          return { status: r.status, ok: r.ok, data: data };
+        });
+      }).then(function (res) {
+        if (res.ok) {
+          var done = document.createElement("div");
           done.setAttribute("role", "status");
           done.setAttribute("tabindex", "-1");
-          done.style.color = "var(--text-primary)";
-          done.textContent = "Sent. You will hear back within a day, usually sooner.";
+          done.style.display = "grid";
+          done.style.gap = "var(--space-3)";
+          var h = document.createElement("h3");
+          h.textContent = "Enquiry sent";
+          var p = document.createElement("p");
+          p.style.margin = "0";
+          p.textContent = "It has gone through. A reply follows by email, usually within a day.";
+          done.appendChild(h); done.appendChild(p);
           form.replaceWith(done);
           done.focus();
+          return;
         }
-      }
+
+        submit.disabled = false;
+        submit.removeAttribute("aria-busy");
+        submit.textContent = label;
+
+        if (res.status === 400 && res.data.errors) {
+          Object.keys(res.data.errors).forEach(function (n) {
+            if (RULES[n]) showError(n, res.data.errors[n]);
+          });
+          var firstBad = Object.keys(res.data.errors)[0];
+          if (document.getElementById(firstBad)) document.getElementById(firstBad).focus();
+          return;
+        }
+        formError("That did not send. Try again, or email " + EMAIL + " directly.");
+      }).catch(function () {
+        submit.disabled = false;
+        submit.removeAttribute("aria-busy");
+        submit.textContent = label;
+        formError("That did not send. Check your connection, or email " + EMAIL + " directly.");
+      });
     });
   }
 })();

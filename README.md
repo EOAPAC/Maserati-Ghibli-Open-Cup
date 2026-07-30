@@ -98,25 +98,67 @@ Every time you push a change to GitHub, Vercel republishes within about a minute
 
 ---
 
-## Before you share the link with anybody
+## The enquiry form
 
-**Send yourself a test enquiry from the live site.** Fill in the form, send it, and check the message arrives at jeremy@badenbower.com. Do this from your phone as well as your computer.
+Enquiries are sent with [Resend](https://resend.com). The form posts to a small
+serverless function at `api/enquiry.js`, which sends the email. Nothing about
+this needs a build step.
 
-The form currently opens the visitor's email program. That works, but on a phone it often doesn't, and when it fails you never find out — the enquiry just never arrives. If this car matters, spend five minutes fixing it:
+**The API key never goes in the code.** This site is static and everything in it
+is public, so a key in `site.js` could be read by anyone viewing source and used
+to send email as your domain. It lives in Vercel instead.
 
-1. Go to **formspree.io** and make a free account.
-2. Create a form. It gives you a web address like `https://formspree.io/f/abcdwxyz`.
-3. Open **site.js**, scroll to near the bottom, and find these two lines:
+### Setting it up
 
-```js
-var ENDPOINT = "";
-var EMAIL = "jeremy@badenbower.com";
-```
+The Resend integration is installed from the Vercel Marketplace, which sets
+`RESEND_API_KEY` and `RESEND_EMAIL_DOMAIN` on the project for you. There is no
+key to copy anywhere and nothing to put in the repo.
 
-4. Put the Formspree address inside the first pair of quotes. Leave the second line alone — it stays as the visible fallback.
-5. Save, push, and send yourself another test.
+What is left to do:
 
----
+1. **Redeploy.** Environment variables only reach builds made after they were
+   added, so the deployment that was live before you installed the integration
+   cannot see them.
+2. **Send yourself a test enquiry from the live site**, from a phone as well as
+   a computer, and confirm it arrives.
+
+Two optional variables, if you want to override the defaults:
+
+| Name | Default |
+| --- | --- |
+| `ENQUIRY_TO` | `jeremy@badenbower.com` |
+| `ENQUIRY_FROM` | `enquiries@` plus the domain the integration provisioned |
+
+### Sending as your own domain
+
+Out of the box the email arrives from the domain Resend provisioned through the
+integration, which is verified and works immediately. To have it come from
+maseratighibliopencup.com instead:
+
+1. Add the domain at resend.com/domains and put the DNS records it gives you at
+   your registrar.
+2. Wait for Resend to show it verified.
+3. Set `ENQUIRY_FROM` to `enquiries@maseratighibliopencup.com` in Vercel and
+   redeploy.
+
+Do not set that variable before the domain shows verified, or Resend will
+reject every send.
+
+Either way, replies go to whoever sent the enquiry: their address is set as the
+reply-to, so hitting reply in your mail client answers the buyer, not Resend.
+
+### What happens when something goes wrong
+
+- **Key missing or wrong:** the visitor sees "That did not send. Try again, or
+  email jeremy@badenbower.com directly." Nothing they typed is lost. The real
+  reason is in the Vercel function logs.
+- **Resend rejects the send:** same message to the visitor, detail in the logs.
+- **A bot fills the form:** there is a hidden field called `company` that people
+  never see and bots fill in. If it has anything in it the message is dropped and
+  the bot gets a cheerful 200 so it does not retry.
+
+The email address stays published under the form for anyone who would rather
+write directly. That is deliberate: some buyers do not trust web forms.
 
 ## Changing what the page says
 

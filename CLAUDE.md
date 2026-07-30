@@ -37,8 +37,11 @@ Push from here directly. There is no build step and no dependencies.
   use stand-in images, not photographs of this car. A photographer replaces
   them. While they are up, `noindex` is set in index.html and robots.txt is
   closed. Both revert in one line each. See README.md.
-- The enquiry form is `mailto:` only. `ENDPOINT` in site.js is blank. On a
-  phone without a mail client configured, submissions fail silently.
+- The enquiry form posts to `/api/enquiry`, a Vercel function that sends via
+  Resend. **The API key belongs in a Vercel environment variable, never in
+  the repo** — this site is static and public, so a key in site.js would be
+  readable by anyone and usable to send mail as the domain. Set
+  `RESEND_API_KEY` in Vercel. See README.md.
 - `_source/` holds the original full-resolution photographs. Gitignored, and
   excluded from Dropbox sync.
 

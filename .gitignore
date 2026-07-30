@@ -2,3 +2,8 @@
 _source/
 _preview/
 preview.html
+
+# never commit environment files
+.env
+.env.*
+!.env.example
